@@ -1,13 +1,13 @@
-import numpy as np
-from datetime import datetime
-from numpy.core.fromnumeric import choose
-import pandas as pd
-import matplotlib.pyplot as plt
-import streamlit as st
-from streamlit.uploaded_file_manager import UploadedFile
-from PIL import Image
-import datetime
-@st.cache
+import numpy as np #pip install numpy
+from datetime import datetime #pip install DateTime
+from numpy.core.fromnumeric import choose 
+import pandas as pd #pip install pandas
+import matplotlib.pyplot as plt #pip install matplotlib
+import streamlit as st #pip install streamlit
+from streamlit.uploaded_file_manager import UploadedFile 
+from PIL import Image  #python3 -m pip install --upgrade Pillow
+import datetime 
+@st.cache #using cache memory 
 class Layout:
     """
     Create layout and return time properties

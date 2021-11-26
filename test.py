@@ -1,33 +1,54 @@
 from Layout import Layout as ly
 from mapword import Map
-import streamlit as st
+import streamlit as st #pip install streamlit
 import pandas as pd
-from streamlit_folium import folium_static
+from streamlit_folium import folium_static #pip install streamlit-folium
 from column_chart import Column as c
 from chart_line import Line as l
 from Statistics import Statistical_data_visualization as S
 from pie_chart import pie as p
  # chart column
 def char_column(data_maps):
-    """Create column chart"""
+    """
+    Create column chart
+
+    input: Dataframe
+
+    output: Column chart by feature(Confirmed,Deaths,Recovered) or all
+    """
     st.header("Overall chart for 1 country")
     cl=c(data_maps.copy())
-    cl.choose_chart_column()
-    col=st.radio('Type:',('Comfirmed', 'Deaths', 'Recovered'))
+    cl.choose_chart_column()   
     cl.Data_preprocessing()
-    if st.button('Show',key="1"):
-        if col == 'Comfirmed':
-            st.plotly_chart(cl.cl_chart('Confirmed'))
-        elif col=='Deaths':
-            st.plotly_chart(cl.cl_chart('Deaths'))
-        elif col=='Recovered':
-            st.plotly_chart(cl.cl_chart('Recovered'))
-        else: st.caption('No style selected')
+    option=st.selectbox("Display type",('None','The each attribute','All'))
+    col=None
+    if option=='The each attribute':
+        col=st.radio('Type:',('Comfirmed', 'Deaths', 'Recovered'))
 
+    if st.button('Show',key="1"):
+        
+        
+        if option=='The each attribute':
+            if col == 'Comfirmed':
+                st.plotly_chart(cl.cl_chart('Confirmed'))
+            elif col=='Deaths':
+                st.plotly_chart(cl.cl_chart('Deaths'))
+            elif col=='Recovered':
+                st.plotly_chart(cl.cl_chart('Recovered'))
+            else: st.caption('No style selected')
+        elif option=='All':
+            st.title("")
+            st.plotly_chart(cl.cl())
 
 #Line Chart
 def Line_chart(df):
-    """Create Line chart"""
+    """
+    Create Line chart
+
+    input: Dataframe
+
+    output: Map representing a feature over a period of time
+    """
     
     country=st.text_input('Name country') 
     date_first,date_last=ly.run_time()
@@ -49,7 +70,13 @@ def Line_chart(df):
 
 #map word
 def map_word(data_maps):
-    """Create map word"""
+    """
+    Create map word
+
+    input: Dataframe
+
+    output: Map showing the number of cases in the world
+    """
     st.header("Map of infection distribution")
     df=data_maps
     date=ly.time()  
@@ -62,6 +89,13 @@ def map_word(data_maps):
     else: st.warning('No date selected')
 
 def pie_chart(df):
+    """
+    Create pie chart
+
+    input: Dataframe
+
+    output: Pie chart showing percentage confirmed, deaths and recovered
+    """
     d_country=df['Country'].unique().tolist()
     country=st.selectbox("Country",tuple(d_country))
     if st.button("Filter"):

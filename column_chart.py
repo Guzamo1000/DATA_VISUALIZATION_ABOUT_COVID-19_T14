@@ -1,9 +1,10 @@
-import pandas as pd
-import numpy as np
-import plotly.express as px
-import plotly.graph_objects as go
-import streamlit as st
-import matplotlib.pyplot as plt
+import pandas as pd #pip install pandas
+import numpy as np #pip install numpy
+#pip install plotly==5.4.0
+import plotly.express as px 
+import plotly.graph_objects as go 
+import streamlit as st #pip install streamlit
+import matplotlib.pyplot as plt #pip install matplotlib 
 import folium #pip install folonum
 
 
@@ -36,13 +37,31 @@ class Column:
         self.df=self.df[self.df['Country'].isin(self.country)]
     def cl_chart(self,inf):
         """
-        Show column chart
+        Column chart by feature
         
         input:
 
             hid: display column name (Comfirmed,deaths,recovered)
             
-        output: Column chart
+        output: Column chart by feature
         """
-        fig = px.bar(self.df, x='Country', y=inf, color='Country', title="The graph shows the total number of infections in a country")
+        fig = px.bar(self.df,
+                    x='Country',
+                    y=inf, 
+                    title="The graph shows the total number of infections in a country",
+                    color='Country',
+                    height=400
+                    )
         return fig
+    def cl(self):
+        """
+        Column chart showing all features
+        """
+        fig=go.Figure(data=[
+            go.Bar(name='Confirmed',x=self.country,y=self.df['Confirmed']),
+            go.Bar(name='Deaths',x=self.country,y=self.df['Deaths']),
+            go.Bar(name='Recovered',x=self.country,y=self.df['Recovered'])
+        ])
+        fig.update_layout(barmode='group')
+        return fig
+    
