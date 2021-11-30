@@ -7,12 +7,11 @@ Nguyễn Thành Long - B19DCCN397
 
 Lê Hà Trang - B19DCCN683
 
-## Dataset
-
-https://github.com/laxmimerit/Covid-19-Preprocessed-Dataset
+## Dataset: https://github.com/laxmimerit/Covid-19-Preprocessed-Dataset
 
 
 ##API
+
 ###Streamlit: pip install streamlit
 
 ###Numpy: pip install numpy
