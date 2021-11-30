@@ -11,7 +11,6 @@ Lê Hà Trang - B19DCCN683
 https://github.com/laxmimerit/Covid-19-Preprocessed-Dataset
 
 #API
-
 ##Streamlit: pip install streamlit
 
 ##Numpy: pip install numpy
@@ -20,4 +19,3 @@ https://github.com/laxmimerit/Covid-19-Preprocessed-Dataset
 
 ##Plotly: pip install plotly
 
-##
