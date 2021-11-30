@@ -31,6 +31,11 @@ class Layout:
         if upload is not None:
              st.sidebar.success("Loading file Complete")
         return upload
+        # data_country_daywise=pd.read_csv(r'E:\PTIT\HK1-N3\Python3\project\Data\Covid-19-Preprocessed-Dataset\preprocessed\country_daywise.csv')
+        # data_countrywise=pd.read_csv(r'E:\PTIT\HK1-N3\Python3\project\Data\Covid-19-Preprocessed-Dataset\preprocessed\countrywise.csv')
+        # data_cleaned=pd.read_csv(r'E:\PTIT\HK1-N3\Python3\project\Data\Covid-19-Preprocessed-Dataset\preprocessed\covid_19_data_cleaned.csv')
+        # data_daywise=pd.read_csv(r'E:\PTIT\HK1-N3\Python3\project\Data\Covid-19-Preprocessed-Dataset\preprocessed\daywise.csv')
+        # return data_country_daywise,data_countrywise,data_cleaned,data_daywise
     def time():
         """return realtime"""
         today=datetime.datetime.now()

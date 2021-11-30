@@ -1,12 +1,13 @@
 from Layout import Layout as ly
 from mapword import Map
 import streamlit as st #pip install streamlit
-import pandas as pd
+import pandas as pd #pip install pandas
 from streamlit_folium import folium_static #pip install streamlit-folium
 from column_chart import Column as c
 from chart_line import Line as l
 from Statistics import Statistical_data_visualization as S
 from pie_chart import pie as p
+import difflib
  # chart column
 def char_column(data_maps):
     """
@@ -49,22 +50,44 @@ def Line_chart(df):
 
     output: Map representing a feature over a period of time
     """
-    
-    country=st.text_input('Name country') 
-    date_first,date_last=ly.run_time()
-    df=df.drop(columns=['Province/State','Lat','Long'])
-    # st.pyplot(Line.chart_line())
-    if st.button('Performances'):
-        if str(date_first)>str(date_last):
-            st.text('Invalid date')
-        else:
-            Line=l(df,country,str(date_first),str(date_last))
-            # Line.Data_preprocessing()
-            d=Line.chart_line()
-            if d is not None:
-                st.plotly_chart(Line.chart_line())
-    else: st.info("Please select the country and time period you want to show")
-    
+    # country=""
+    # country=st.text_input("Country")
+    # if country=="":
+    #     Data=l.Data_preprocessing_word(df.copy())
+    # elif country!="": Data=l.Data_preprocessing_country(df.copy())
+    # date_first,date_last=ly.run_time()
+    # # Data=l.Data_preprocessing(df)
+    # if st.button('Performances'):
+    #     Line=l(Data,country,str(date_first),str(date_last))
+    #     d=Line.chart_line()
+    #     if d is not None:
+    #         st.plotly_chart(Line.chart_line())
+    # else: st.info("Please select the country and time period you want to show")
+    option=st.radio("OPTION:",('None','All','Country'))
+    if option=='All':
+        date_first,date_last=ly.run_time()
+        if st.button("Show"):
+            data=l.Data_preprocessing_word(df.copy())
+            Line=l(data)
+            st.plotly_chart(Line.chart_line_all(str(date_first),str(date_last)))
+    elif option=='Country':
+        country=st.text_input('Country')
+        date_first,date_last=ly.run_time()
+        list_country=df['Country'].unique().tolist()
+        c=[]
+        c=difflib.get_close_matches(country,list_country)
+        t=''
+        if len(c)!=0:
+            t=c[0]
+        if t!=country:
+            st.info(f"Alternative word for {country} is {t}")
+        country=t
+        if st.button("Show"):
+            data=l.Data_preprocessing_country(df.copy())
+            Line=l(data)
+            st.plotly_chart(Line.chart_line_country(country,str(date_first),str(date_last)))
+        
+
 
 
 
@@ -176,14 +199,15 @@ def statistics(dt):
 def main():
     st.title("Data visualization about covid-19")
     ly.Title()
-    upload_file_maps=None,None,None,None
 
-    upload_file_maps=ly.upload_data()
+    upload_file=None
 
-    global data_maps
-    if upload_file_maps is not None: 
+    upload_file=ly.upload_data()
+
+    global df
+    if upload_file is not None: 
         #read data
-        data_maps=pd.read_csv(upload_file_maps)
+        df=pd.read_csv(upload_file)
 
         st.sidebar.text('Choose a representative number')
         st.sidebar.text('1. Column chart')
@@ -195,17 +219,17 @@ def main():
         option = st.sidebar.number_input('Insert a number',step=1)
         if option is not None:
             if option == 1:
-                char_column(data_maps.copy())
+                char_column(df.copy())
             elif option==2:
-                Line_chart(data_maps.copy())
+                Line_chart(df.copy())
             elif option == 3:
-                map_word(data_maps.copy())
+                map_word(df.copy())
             elif option == 4:
                 # st.header('None')
-                pie_chart(data_maps.copy())
+                pie_chart(df.copy())
             elif option == 5:
                 st.title('Statistics')
-                statistics(data_maps.copy())
+                statistics(df.copy())
             elif option>5: 
                 st.sidebar.warning("Please select only 1 to 5")
 if __name__=="__main__":
