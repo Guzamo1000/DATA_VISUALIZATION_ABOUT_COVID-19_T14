@@ -100,17 +100,22 @@ def map_word(data_maps):
 
     output: Map showing the number of cases in the world
     """
+
     st.header("Map of infection distribution")
+    
+    fig=Map(data_maps).datatop()
+    st.plotly_chart(fig)
+    st.text('Total number of infections in the world')
     df=data_maps
     date=ly.time()  
-    maps=Map(data_maps,str(date))
-    m=maps.datamap()
+    maps=Map(data_maps)
+    m=maps.datamap(str(date))
+    
     if st.button('Show maps'):
         if m==0: st.error('Date not in data')
         else:
             folium_static(m)
     else: st.warning('No date selected')
-
 def pie_chart(df):
     """
     Create pie chart
