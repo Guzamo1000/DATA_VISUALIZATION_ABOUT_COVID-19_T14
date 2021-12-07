@@ -2,7 +2,7 @@ import numpy as np #pip install numpy
 from datetime import datetime #pip install DateTime
 from numpy.core.fromnumeric import choose 
 import pandas as pd #pip install pandas
-# import matplotlib.pyplot as plt #pip install matplotlib
+import matplotlib.pyplot as plt #pip install matplotlib
 import streamlit as st #pip install streamlit
 from streamlit.uploaded_file_manager import UploadedFile 
 from PIL import Image  #python3 -m pip install --upgrade Pillow
